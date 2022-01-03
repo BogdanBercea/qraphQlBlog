@@ -26,7 +26,7 @@ const routes = [
 
 const apolloClient = new ApolloClient({
   // You should use an absolute URL here
-  uri: 'https://api.graphcms.com/simple/v1/awesomeTalksClone'
+  uri: 'http://graphqlblog.test/graphql'
 })
 
 const apolloProvider = new VueApollo({
