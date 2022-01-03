@@ -1,32 +1,45 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Vue from 'vue'
+import VueRouter from 'vue-router';
+import PostList from './PostList'
+import Post from './Post'
+import ApolloClient from 'apollo-boost'
+import VueApollo from 'vue-apollo'
 
-require('./bootstrap');
+import './bootstrap'
 
-window.Vue = require('vue').default;
+window.Vue = Vue;
+Vue.use(VueRouter);
+Vue.use(VueApollo);
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+const routes = [
+    {
+        path: '/',
+        name: 'index',
+        component: PostList
+    },
+    {
+        path: '/post/:id',
+        name: 'post',
+        component: Post
+    },
+];
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const apolloClient = new ApolloClient({
+  // You should use an absolute URL here
+  uri: 'https://api.graphcms.com/simple/v1/awesomeTalksClone'
+})
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+const apolloProvider = new VueApollo({
+    defaultClient: apolloClient,
+  })
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const router = new VueRouter({
+    mode: 'history',
+    routes
+});
 
 const app = new Vue({
     el: '#app',
+    apolloProvider,
+    router
 });
