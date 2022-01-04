@@ -5,11 +5,10 @@
             <div class="text-lg text-gray-600">By {{ post.author.name }} in 
                 <router-link :to="{name: 'topic', params: {slug: post.topic.slug}}" class="underline hover:text-black">
                     {{ post.topic.name }}
-                </router-link>&nbsp;  * 3 hours ago
+                </router-link>&nbsp;  * {{ post.created_at | timeAgo }}
             </div>
             <h1 class="text-5xl mt-10 font-bold mb-12">{{ post.title }}</h1>
             <p class="text-gray-700 pb-3 mb-12 whitespace-pre-line">{{ post.content }}</p>
-
             <div class="mb-24 flex">
                 <div class="mr-6">
                     <img 
@@ -26,12 +25,11 @@
                     <div class="text-gray-600">Published in 
                         <router-link :to="{name: 'topic', params: {slug: post.topic.slug}}" class="underline hover:text-black">
                             {{ post.topic.name }}
-                        </router-link>&nbsp;  on May 19, 2021
+                        </router-link>&nbsp;  on {{ post.created_at | longDate }}
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -44,16 +42,17 @@ export default {
             query: gql`
                 query ($id: ID!) {
                     post(id: $id) {
-                        id,
-                        title,
-                        content,
+                        id
+                        title
+                        content
+                        created_at
                         author {
-                            id,
-                            name,
+                            id
+                            name
                             avatar
-                        },
+                        }
                         topic {
-                            name,
+                            name
                             slug
                         }
                     }

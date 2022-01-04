@@ -11,7 +11,7 @@
             <router-link :to="{name: 'topic', params: {slug: post.topic.slug}}" class="underline hover:text-black">
                 {{ post.topic.name }}
             </router-link>&nbsp; 
-            3 hours ago
+            {{ post.created_at | timeAgo }}
         </div>
     </div>
 </template>
