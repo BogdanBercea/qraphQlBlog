@@ -1,13 +1,16 @@
 import Vue from 'vue'
+import VueApollo from 'vue-apollo'
+import ApolloClient from 'apollo-boost'
+import moment from "moment"
+
+import './bootstrap'
+
 import VueRouter from 'vue-router';
 import PostList from './PostList'
 import Post from './Post'
-import ApolloClient from 'apollo-boost'
-import VueApollo from 'vue-apollo'
 import TopicPostList from './TopicPostList'
 import AuthorPostList from './AuthorPostList'
-import moment from "moment"
-import './bootstrap'
+import NotFound from './NotFound'
 
 window.Vue = Vue;
 Vue.use(VueRouter);
@@ -34,10 +37,14 @@ const routes = [
         name: 'author',
         component: AuthorPostList
     },
+    {
+        path: '*',
+        name: '404',
+        component: NotFound
+    }
 ];
 
 const apolloClient = new ApolloClient({
-  // You should use an absolute URL here
   uri: 'http://graphqlblog.test/graphql'
 })
 
